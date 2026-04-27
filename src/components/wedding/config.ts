@@ -31,7 +31,7 @@ export const weddingConfig = {
     mapsQuery: "Rajamalar+Thirumana+Mahal",
   },
   contactEmail: "venkatesanben0@gmail.com",
-  contactPhone: "+91 00000 00000",
+  contactPhone: "+91 9123505570",
 };
 
 export function useCountdown(target: Date) {
