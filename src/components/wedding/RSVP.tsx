@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Heart, Send, Check, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { FunctionsHttpError, FunctionsRelayError, FunctionsFetchError } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
 export const RSVP = () => {
@@ -26,8 +27,25 @@ export const RSVP = () => {
       setSubmitted(true);
       toast.success("Thank you for your RSVP!");
     } catch (err) {
-      console.error(err);
-      toast.error("Sorry, we couldn't send your RSVP. Please try again.");
+      let detail = "Please try again.";
+      if (err instanceof FunctionsHttpError) {
+        try {
+          const body = await err.context.json();
+          console.error("send-rsvp function error:", body);
+          detail = body?.error || body?.details?.message || JSON.stringify(body);
+        } catch {
+          console.error("send-rsvp function error (no JSON body):", err);
+        }
+      } else if (err instanceof FunctionsRelayError) {
+        console.error("Relay error:", err.message);
+        detail = `Relay error: ${err.message}`;
+      } else if (err instanceof FunctionsFetchError) {
+        console.error("Fetch error:", err.message);
+        detail = `Network error: ${err.message}`;
+      } else {
+        console.error("Unknown RSVP error:", err);
+      }
+      toast.error(`Sorry, we couldn't send your RSVP. ${detail}`);
     } finally {
       setSending(false);
     }

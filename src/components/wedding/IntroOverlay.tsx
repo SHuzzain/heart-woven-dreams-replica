@@ -31,7 +31,7 @@ export const IntroOverlay = ({ visible, onDone }: { visible: boolean; onDone: ()
             >
               <div className="absolute -inset-16 rounded-full bg-gold/20 blur-3xl animate-pulse" />
               <div className="relative">
-                <div className="font-script text-[10rem] md:text-[16rem] leading-none text-gradient-gold">
+                <div className="font-script text-[10rem] md:text-[16rem] leading-none text-gradient-gold px-[30px]">
                   {weddingConfig.initials}
                 </div>
               </div>

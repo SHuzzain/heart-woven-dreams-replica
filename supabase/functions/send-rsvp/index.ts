@@ -53,6 +53,13 @@ Deno.serve(async (req) => {
       </div>
     `;
 
+    console.log("send-rsvp invoked", {
+      from: RSVP_FROM_EMAIL,
+      to: RSVP_TO_EMAIL,
+      attending,
+      hasMessage: Boolean(message),
+    });
+
     const resp = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -68,14 +75,30 @@ Deno.serve(async (req) => {
       }),
     });
 
-    const data = await resp.json().catch(() => ({}));
+    const rawText = await resp.text();
+    let data: Record<string, unknown> = {};
+    try {
+      data = rawText ? JSON.parse(rawText) : {};
+    } catch {
+      data = { raw: rawText };
+    }
+
     if (!resp.ok) {
-      console.error("Resend error", resp.status, data);
+      console.error("Resend rejected request", {
+        status: resp.status,
+        statusText: resp.statusText,
+        body: data,
+        from: RSVP_FROM_EMAIL,
+        to: RSVP_TO_EMAIL,
+      });
+      const message = (data as { message?: string })?.message ?? "Email provider rejected the request";
       return new Response(
-        JSON.stringify({ error: "Failed to send", status: resp.status, details: data }),
+        JSON.stringify({ error: message, status: resp.status, details: data }),
         { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
+
+    console.log("Resend accepted email", { id: (data as { id?: string })?.id });
 
     return new Response(JSON.stringify({ success: true, id: data?.id ?? null }), {
       status: 200,
