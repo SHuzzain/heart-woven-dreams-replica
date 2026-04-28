@@ -17,9 +17,8 @@ export const weddingConfig = {
     address: "MG3R+77W, Vallam Rd, Cheyyar, Tamil Nadu 604407",
     mapsQuery: "MG3R%2B77W+Vallam+Rd+Cheyyar+Tamil+Nadu+604407",
     mapsEmbedSrc:
-      "https://www.google.com/maps?q=MG3R%2B77W+Vallam+Rd+Cheyyar+Tamil+Nadu+604407&output=embed",
-    mapsDirectionsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=MG3R%2B77W+Vallam+Rd+Cheyyar+Tamil+Nadu+604407",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243.30802227389475!2d79.53997434780516!3d12.652702156384082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52d772fdc24689%3A0xdce97c813fcd6534!2sRajamalar%20Thirumana%20Mahal!5e0!3m2!1sen!2sin!4v1777382523982!5m2!1sen!2sin",
+    mapsDirectionsUrl: "https://maps.app.goo.gl/4L7vQHfMc56jDRXd7",
   },
   // Backwards-compat aliases (some sections may still reference these)
   weddingVenue: {

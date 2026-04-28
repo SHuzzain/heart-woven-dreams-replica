@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { StoryMilestone, useWeddingContent } from "./content";
+import { useParallax } from "@/hooks/use-parallax";
 
 const StoryCard = ({ item, index }: { item: StoryMilestone; index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,15 +62,42 @@ const StoryCard = ({ item, index }: { item: StoryMilestone; index: number }) => 
 export const Story = () => {
   const { content } = useWeddingContent();
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  // Two soft blurred blobs that drift at different rates relative to the
+  // page scroll, creating a quiet sense of depth behind the chapters.
+  const blobLeftY = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const blobRightY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const headingY = useParallax(headingRef, { distance: 40, direction: "up" });
+
   return (
-    <section id="story" className="relative py-32 md:py-40 overflow-hidden">
+    <section id="story" ref={sectionRef} className="relative py-32 md:py-40 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-ivory via-ivory-warm to-ivory" />
       <div className="absolute inset-0 bg-noise opacity-[0.03]" />
 
+      {/* decorative parallax blobs */}
+      <motion.div
+        aria-hidden="true"
+        style={{ y: blobLeftY }}
+        className="pointer-events-none absolute -left-24 top-[15%] w-[28rem] h-[28rem] rounded-full bg-gold-light/25 blur-3xl"
+      />
+      <motion.div
+        aria-hidden="true"
+        style={{ y: blobRightY }}
+        className="pointer-events-none absolute -right-32 top-[55%] w-[32rem] h-[32rem] rounded-full bg-blush/30 blur-3xl"
+      />
+
       <div className="container relative">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          ref={headingRef}
+          style={{ y: headingY }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
           className="text-center mb-24"

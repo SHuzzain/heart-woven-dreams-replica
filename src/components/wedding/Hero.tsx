@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { ChevronDown, Heart } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 import { HeroScene } from "./HeroScene";
+import { HeroQuickNav } from "./HeroQuickNav";
+import { ScrollIndicator } from "./ScrollIndicator";
 import { weddingConfig } from "./config";
 import heroBg from "@/assets/hero-bg.jpg";
 
@@ -94,6 +96,7 @@ export const Hero = ({ onEnter }: { onEnter: () => void }) => {
               year: "numeric",
             })}
           </p>
+
         </motion.div>
 
         <motion.button
@@ -110,16 +113,9 @@ export const Hero = ({ onEnter }: { onEnter: () => void }) => {
         </motion.button>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-cocoa"
-      >
-        <span className="font-serif text-sm font-bold tracking-[0.3em] uppercase ">Scroll</span>
-        <ChevronDown className="w-4 h-4 animate-bounce" />
-      </motion.div>
+      <ScrollIndicator targetId="events" />
+
+      <HeroQuickNav />
     </section>
   );
 };

@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
 import { weddingConfig, useCountdown } from "./config";
+import { useParallax } from "@/hooks/use-parallax";
 
 const Unit = ({ value, label }: { value: number; label: string }) => {
   const padded = String(value).padStart(2, "0");
@@ -32,10 +34,28 @@ const Unit = ({ value, label }: { value: number; label: string }) => {
 export const Countdown = () => {
   const t = useCountdown(weddingConfig.date);
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const radialRef = useRef<HTMLDivElement>(null);
+  // Subtle scroll-linked drifts: background drifts the opposite direction
+  // (depth) while the heading and cards drift gently upward (foreground).
+  const radialY = useParallax(radialRef, { distance: 80, direction: "down" });
+  const headingY = useParallax(headingRef, { distance: 50, direction: "up" });
+  const cardsY = useParallax(cardsRef, { distance: 30, direction: "up" });
+
   return (
-    <section id="countdown" className="relative py-32 md:py-40 overflow-hidden">
+    <section
+      id="countdown"
+      ref={sectionRef}
+      className="relative py-32 md:py-40 overflow-hidden"
+    >
       <div className="absolute inset-0 bg-gradient-blush" />
-      <div className="absolute inset-0 bg-gradient-radial opacity-60" />
+      <motion.div
+        ref={radialRef}
+        style={{ y: radialY }}
+        className="absolute inset-0 bg-gradient-radial opacity-60"
+      />
 
       {/* floating petals (CSS) */}
       {Array.from({ length: 12 }).map((_, i) => (
@@ -53,8 +73,10 @@ export const Countdown = () => {
 
       <div className="container relative text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          ref={headingRef}
+          style={{ y: headingY }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
@@ -67,8 +89,10 @@ export const Countdown = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          ref={cardsRef}
+          style={{ y: cardsY }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3 }}
           className="mt-16 flex flex-wrap items-center justify-center gap-3 md:gap-6"

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { weddingConfig } from "./config";
+import { ScrollIndicator } from "./ScrollIndicator";
 
 export const Welcome = () => {
   return (
@@ -40,6 +41,7 @@ export const Welcome = () => {
           {weddingConfig.bride} &amp; {weddingConfig.groom}
         </motion.p>
       </div>
+
     </section>
   );
 };
