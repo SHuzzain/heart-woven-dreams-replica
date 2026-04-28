@@ -115,7 +115,9 @@ export const Hero = ({ onEnter }: { onEnter: () => void }) => {
 
       <ScrollIndicator targetId="events" />
 
+
       <HeroQuickNav />
+
     </section>
   );
 };

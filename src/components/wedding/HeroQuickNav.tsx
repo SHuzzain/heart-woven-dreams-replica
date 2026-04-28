@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Compass, MapPin, Sparkles, X, type LucideIcon } from "lucide-react";
+import { Compass, MapPin, Heart, X, type LucideIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { weddingConfig } from "./config";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type QuickNavItem = {
   id: string;
@@ -21,7 +22,7 @@ const items: QuickNavItem[] = [
     href: "#events",
     eyebrow: "Save the Date",
     label: "The Celebration",
-    Icon: Sparkles,
+    Icon: Heart,
   },
   {
     id: "venue",
@@ -44,6 +45,7 @@ const items: QuickNavItem[] = [
 export const HeroQuickNav = () => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   // Close on Escape and on clicks outside the menu — common menu UX.
   useEffect(() => {
@@ -61,12 +63,57 @@ export const HeroQuickNav = () => {
       window.removeEventListener("pointerdown", onPointer);
     };
   }, [open]);
-
+  {/* move this top level in mobile view */ }
   return (
     <div
       ref={containerRef}
-      className="absolute bottom-8 left-6 md:bottom-10 md:left-10 z-20 flex flex-col-reverse items-start gap-4"
+      className="absolute left-6 md:bottom-10 md:left-10 z-20 flex flex-col-reverse items-start gap-4 max-md:top-2 max-md:left-2"
     >
+
+
+      {/* Expanded menu items */}
+      {isMobile &&
+        <AnimatePresence>
+          {open &&
+            items.map((item, i) => {
+              const Icon = item.Icon;
+              return (
+                <motion.a
+                  key={item.id}
+                  href={item.href}
+                  role="menuitem"
+                  aria-label={`${item.eyebrow}: ${item.label}`}
+                  title={item.label}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, y: 16, scale: 0.6, x: 2 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 16, scale: 0.6 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: i * 0.07,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  whileHover={{ scale: 1.06, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group inline-flex items-center gap-3"
+                >
+                  <span className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-gold shadow-glow transition-shadow group-hover:shadow-elegant">
+                    <span className="absolute inset-0 rounded-full bg-gold/40 blur-xl opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <Icon className="relative w-5 h-5 md:w-6 md:h-6 text-ivory" strokeWidth={1.5} />
+                  </span>
+                  <span className="hidden md:flex flex-col leading-tight rounded-full bg-ivory/60 backdrop-blur-sm px-4 py-1.5 shadow-soft">
+                    <span className="font-serif italic text-gold-deep tracking-[0.25em] uppercase text-[10px]">
+                      {item.eyebrow}
+                    </span>
+                    <span className="font-serif text-cocoa text-sm">{item.label}</span>
+                  </span>
+                </motion.a>
+              );
+            })}
+        </AnimatePresence>
+      }
+
+
       {/* Trigger / FAB — anchored at the bottom; menu items stack above it */}
       <Tooltip delayDuration={250}>
         <TooltipTrigger asChild>
@@ -81,7 +128,7 @@ export const HeroQuickNav = () => {
             transition={{ delay: 2.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ scale: 1.08, y: -4 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-gold shadow-glow transition-shadow hover:shadow-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+            className="group relative flex items-center justify-center size-12 md:size-14 rounded-full bg-gradient-gold shadow-glow transition-shadow hover:shadow-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
           >
             <span className="absolute inset-0 rounded-full bg-gold/40 blur-xl opacity-60 transition-opacity group-hover:opacity-100" />
             {/* Subtle slow rotation on the closed compass for liveliness */}
@@ -95,7 +142,7 @@ export const HeroQuickNav = () => {
                   transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                   className="relative inline-flex"
                 >
-                  <X className="w-6 h-6 md:w-7 md:h-7 text-ivory" strokeWidth={2} />
+                  <X className="size-6 md:size-7 text-ivory" strokeWidth={2} />
                 </motion.span>
               ) : (
                 <motion.span
@@ -106,7 +153,7 @@ export const HeroQuickNav = () => {
                   transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                   className="relative inline-flex"
                 >
-                  <Compass className="w-6 h-6 md:w-7 md:h-7 text-ivory" strokeWidth={1.5} />
+                  <Compass className="size-5 md:size-6 text-ivory" strokeWidth={1.5} />
                 </motion.span>
               )}
             </AnimatePresence>
@@ -121,45 +168,46 @@ export const HeroQuickNav = () => {
         </TooltipContent>
       </Tooltip>
 
-      {/* Expanded menu items */}
-      <AnimatePresence>
-        {open &&
-          items.map((item, i) => {
-            const Icon = item.Icon;
-            return (
-              <motion.a
-                key={item.id}
-                href={item.href}
-                role="menuitem"
-                aria-label={`${item.eyebrow}: ${item.label}`}
-                title={item.label}
-                onClick={() => setOpen(false)}
-                initial={{ opacity: 0, y: 16, scale: 0.6 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 16, scale: 0.6 }}
-                transition={{
-                  duration: 0.35,
-                  delay: i * 0.07,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={{ scale: 1.06, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="group inline-flex items-center gap-3"
-              >
-                <span className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-gold shadow-glow transition-shadow group-hover:shadow-elegant">
-                  <span className="absolute inset-0 rounded-full bg-gold/40 blur-xl opacity-60 group-hover:opacity-100 transition-opacity" />
-                  <Icon className="relative w-5 h-5 md:w-6 md:h-6 text-ivory" strokeWidth={1.5} />
-                </span>
-                <span className="hidden md:flex flex-col leading-tight rounded-full bg-ivory/60 backdrop-blur-sm px-4 py-1.5 shadow-soft">
-                  <span className="font-serif italic text-gold-deep tracking-[0.25em] uppercase text-[10px]">
-                    {item.eyebrow}
+      {!isMobile &&
+        <AnimatePresence>
+          {open &&
+            items.map((item, i) => {
+              const Icon = item.Icon;
+              return (
+                <motion.a
+                  key={item.id}
+                  href={item.href}
+                  role="menuitem"
+                  aria-label={`${item.eyebrow}: ${item.label}`}
+                  title={item.label}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, y: 16, scale: 0.6, }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 16, scale: 0.6 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: i * 0.07,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  whileHover={{ scale: 1.06, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group inline-flex items-center gap-3"
+                >
+                  <span className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-gold shadow-glow transition-shadow group-hover:shadow-elegant">
+                    <span className="absolute inset-0 rounded-full bg-gold/40 blur-xl opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <Icon className="relative w-5 h-5 md:w-6 md:h-6 text-ivory" strokeWidth={1.5} />
                   </span>
-                  <span className="font-serif text-cocoa text-sm">{item.label}</span>
-                </span>
-              </motion.a>
-            );
-          })}
-      </AnimatePresence>
+                  <span className="hidden md:flex flex-col leading-tight rounded-full bg-ivory/60 backdrop-blur-sm px-4 py-1.5 shadow-soft">
+                    <span className="font-serif italic text-gold-deep tracking-[0.25em] uppercase text-[10px]">
+                      {item.eyebrow}
+                    </span>
+                    <span className="font-serif text-cocoa text-sm">{item.label}</span>
+                  </span>
+                </motion.a>
+              );
+            })}
+        </AnimatePresence>
+      }
     </div>
   );
 };

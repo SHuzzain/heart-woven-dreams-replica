@@ -24,7 +24,7 @@ const Index = () => {
       <IntroOverlay visible={introVisible} onDone={() => setIntroVisible(false)} />
       <FloatingPetals />
       <Fireworks />
-      <MusicToggle />
+      {/* <MusicToggle /> */}
 
       <Hero onEnter={scrollToWelcome} />
       <div id="welcome">
