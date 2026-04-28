@@ -25,7 +25,7 @@ export const RSVP = () => {
       });
       if (error) throw error;
       setSubmitted(true);
-      toast.success("Thank you for your RSVP!");
+      // toast.success("Thank you for your RSVP!");
     } catch (err) {
       let detail = "Please try again.";
       if (err instanceof FunctionsHttpError) {
@@ -105,11 +105,10 @@ export const RSVP = () => {
                         key={v}
                         type="button"
                         onClick={() => setAttending(v)}
-                        className={`flex-1 rounded-full py-3 font-serif tracking-widest uppercase text-sm transition-all border ${
-                          attending === v
-                            ? "bg-gradient-gold text-ivory border-transparent shadow-glow"
-                            : "border-gold/30 text-cocoa/70 hover:border-gold hover:text-cocoa"
-                        }`}
+                        className={`flex-1 rounded-full py-3 font-serif tracking-widest uppercase text-sm transition-all border ${attending === v
+                          ? "bg-gradient-gold text-ivory border-transparent shadow-glow"
+                          : "border-gold/30 text-cocoa/70 hover:border-gold hover:text-cocoa"
+                          }`}
                       >
                         {v === "yes" ? "Joyfully Accept" : "Regretfully Decline"}
                       </button>
