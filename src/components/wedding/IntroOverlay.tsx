@@ -43,7 +43,7 @@ export const IntroOverlay = ({ visible, onDone }: { visible: boolean; onDone: ()
               transition={{ duration: 1, delay: 1.2 }}
               className="mt-4 font-serif tracking-[0.4em] uppercase text-sm text-cocoa/70"
             >
-              A Love Story
+              Wedding Invitation
             </motion.div>
 
             <motion.div

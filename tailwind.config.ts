@@ -25,6 +25,7 @@ export default {
         ivory: { DEFAULT: "hsl(var(--ivory))", warm: "hsl(var(--ivory-warm))" },
         blush: { DEFAULT: "hsl(var(--blush))", deep: "hsl(var(--blush-deep))" },
         rose: "hsl(var(--rose))",
+        burgundy: { DEFAULT: "hsl(var(--burgundy))", light: "hsl(var(--burgundy-light))" },
         gold: { DEFAULT: "hsl(var(--gold))", light: "hsl(var(--gold-light))", deep: "hsl(var(--gold-deep))" },
         cocoa: "hsl(var(--cocoa))",
         mist: "hsl(var(--mist))",

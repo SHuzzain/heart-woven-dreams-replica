@@ -64,7 +64,7 @@ export const Location = () => {
                     <div className="rounded-2xl border border-gold/20 bg-ivory/50 p-4">
                       <p className="text-gold-deep tracking-widest uppercase text-xs">Reception</p>
                       <p className="mt-2 text-cocoa">17 May 2026</p>
-                      <p className="text-cocoa/70">{weddingConfig.receptionTime.replace(" (17th May 2026)", "")}</p>
+                      <p className="text-cocoa/70">{weddingConfig.receptionTime}</p>
                     </div>
                     <div className="rounded-2xl border border-gold/20 bg-ivory/50 p-4">
                       <p className="text-gold-deep tracking-widest uppercase text-xs">Wedding</p>
