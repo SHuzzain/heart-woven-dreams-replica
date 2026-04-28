@@ -8,6 +8,15 @@
     <!--
       ============================================================
         Primary SEO
+
+        IMPORTANT: All og:url, og:image, twitter:image, canonical,
+        and JSON-LD URLs are ABSOLUTE and point to the deployed
+        domain. Strict crawlers (WhatsApp, iMessage, some Outlook
+        flavours) refuse to load relative URLs from these tags, so
+        absolutes are required for share previews to render.
+
+        If you migrate to a new domain, search & replace
+        `https://two-heart-dreams.vercel.app` below.
       ============================================================
     -->
     <title>Venkatesan &amp; Pavithra — A Wedding Invitation | May 18, 2026</title>
@@ -22,7 +31,7 @@
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#a37a2a" />
-    <link rel="canonical" href="/" />
+    <link rel="canonical" href="https://two-heart-dreams.vercel.app/" />
 
     <!-- Mobile / web app polish -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,27 +44,20 @@
       ============================================================
         Open Graph
         (Facebook, LinkedIn, WhatsApp, iMessage, Slack, Discord, Telegram)
-
-        NOTE: og:image / og:url use relative paths so they "just work"
-        across deployments. Most modern crawlers resolve them against
-        the page's domain. After you publish to a final domain, you
-        may upgrade these to absolute URLs (e.g.
-        https://yourdomain.com/og-image.png) for maximum reach with
-        older or stricter crawlers.
       ============================================================
     -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Venkatesan &amp; Pavithra Wedding" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="/" />
+    <meta property="og:url" content="https://two-heart-dreams.vercel.app/" />
     <meta property="og:title" content="Venkatesan &amp; Pavithra — A Wedding Invitation" />
     <meta
       property="og:description"
       content="Two hearts, one journey. Join us as we celebrate our wedding on May 18, 2026 at Rajamalar Thirumana Mahal, Cheyyar."
     />
-    <meta property="og:image" content="/og-image.png" />
-    <meta property="og:image:secure_url" content="/og-image.png" />
-    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image" content="https://two-heart-dreams.vercel.app/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://two-heart-dreams.vercel.app/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1024" />
     <meta property="og:image:height" content="1536" />
     <meta
@@ -74,7 +76,7 @@
       name="twitter:description"
       content="Two hearts, one journey. Join us as we celebrate our wedding on May 18, 2026 at Rajamalar Thirumana Mahal, Cheyyar."
     />
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:image" content="https://two-heart-dreams.vercel.app/og-image.jpg" />
     <meta
       name="twitter:image:alt"
       content="Wedding invitation — Venkatesan &amp; Pavithra, May 18, 2026"
@@ -92,14 +94,15 @@
         "@graph": [
           {
             "@type": "Event",
-            "@id": "/#wedding",
+            "@id": "https://two-heart-dreams.vercel.app/#wedding",
             "name": "Wedding of Venkatesan & Pavithra",
             "description": "The wedding ceremony of Venkatesan & Pavithra. Two hearts, one journey.",
             "startDate": "2026-05-18T06:00:00+05:30",
             "endDate": "2026-05-18T12:00:00+05:30",
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "image": ["/og-image.png"],
+            "image": ["https://two-heart-dreams.vercel.app/og-image.jpg"],
+            "url": "https://two-heart-dreams.vercel.app/",
             "location": {
               "@type": "Place",
               "name": "Rajamalar Thirumana Mahal",
@@ -123,7 +126,7 @@
             "isAccessibleForFree": true,
             "offers": {
               "@type": "Offer",
-              "url": "/#rsvp",
+              "url": "https://two-heart-dreams.vercel.app/#rsvp",
               "price": "0",
               "priceCurrency": "INR",
               "availability": "https://schema.org/InStock",
@@ -132,14 +135,15 @@
           },
           {
             "@type": "Event",
-            "@id": "/#reception",
+            "@id": "https://two-heart-dreams.vercel.app/#reception",
             "name": "Reception of Venkatesan & Pavithra",
             "description": "Wedding reception celebration — an evening of music, food and joy.",
             "startDate": "2026-05-17T19:00:00+05:30",
             "endDate": "2026-05-17T23:00:00+05:30",
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "image": ["/og-image.png"],
+            "image": ["https://two-heart-dreams.vercel.app/og-image.jpg"],
+            "url": "https://two-heart-dreams.vercel.app/",
             "location": {
               "@type": "Place",
               "name": "Rajamalar Thirumana Mahal",
@@ -160,8 +164,8 @@
           },
           {
             "@type": "WebSite",
-            "@id": "/#website",
-            "url": "/",
+            "@id": "https://two-heart-dreams.vercel.app/#website",
+            "url": "https://two-heart-dreams.vercel.app/",
             "name": "Venkatesan & Pavithra Wedding",
             "description": "Two hearts, one journey — the official wedding invitation of Venkatesan & Pavithra.",
             "inLanguage": "en"
