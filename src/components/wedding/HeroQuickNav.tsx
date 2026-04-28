@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Compass, MapPin, Sparkles, X, type LucideIcon } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { weddingConfig } from "./config";
 
 type QuickNavItem = {
@@ -67,47 +68,58 @@ export const HeroQuickNav = () => {
       className="absolute bottom-8 left-6 md:bottom-10 md:left-10 z-20 flex flex-col-reverse items-start gap-4"
     >
       {/* Trigger / FAB — anchored at the bottom; menu items stack above it */}
-      <motion.button
-        type="button"
-        aria-expanded={open}
-        aria-haspopup="menu"
-        aria-label={open ? "Close quick navigation" : "Open quick navigation"}
-        onClick={() => setOpen((v) => !v)}
-        initial={{ opacity: 0, scale: 0.8, y: 10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ delay: 2.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ scale: 1.08, y: -4 }}
-        whileTap={{ scale: 0.95 }}
-        className="group relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-gold shadow-glow transition-shadow hover:shadow-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-      >
-        <span className="absolute inset-0 rounded-full bg-gold/40 blur-xl opacity-60 transition-opacity group-hover:opacity-100" />
-        {/* Subtle slow rotation on the closed compass for liveliness */}
-        <AnimatePresence mode="wait" initial={false}>
-          {open ? (
-            <motion.span
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="relative inline-flex"
-            >
-              <X className="w-6 h-6 md:w-7 md:h-7 text-ivory" strokeWidth={2} />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="open"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="relative inline-flex"
-            >
-              <Compass className="w-6 h-6 md:w-7 md:h-7 text-ivory" strokeWidth={1.5} />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </motion.button>
+      <Tooltip delayDuration={250}>
+        <TooltipTrigger asChild>
+          <motion.button
+            type="button"
+            aria-expanded={open}
+            aria-haspopup="menu"
+            aria-label={open ? "Close quick navigation" : "Open quick navigation"}
+            onClick={() => setOpen((v) => !v)}
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 2.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ scale: 1.08, y: -4 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-gold shadow-glow transition-shadow hover:shadow-elegant focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+          >
+            <span className="absolute inset-0 rounded-full bg-gold/40 blur-xl opacity-60 transition-opacity group-hover:opacity-100" />
+            {/* Subtle slow rotation on the closed compass for liveliness */}
+            <AnimatePresence mode="wait" initial={false}>
+              {open ? (
+                <motion.span
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative inline-flex"
+                >
+                  <X className="w-6 h-6 md:w-7 md:h-7 text-ivory" strokeWidth={2} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="open"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative inline-flex"
+                >
+                  <Compass className="w-6 h-6 md:w-7 md:h-7 text-ivory" strokeWidth={1.5} />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        </TooltipTrigger>
+        <TooltipContent
+          side="right"
+          sideOffset={14}
+          className="font-serif italic tracking-wider text-cocoa border-gold/30 bg-ivory/95"
+        >
+          {open ? "Close menu" : "Find your way"}
+        </TooltipContent>
+      </Tooltip>
 
       {/* Expanded menu items */}
       <AnimatePresence>
