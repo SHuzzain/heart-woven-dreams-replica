@@ -32,7 +32,7 @@ const Unit = ({ value, label }: { value: number; label: string }) => {
 };
 
 export const Countdown = () => {
-  const t = useCountdown(weddingConfig.date);
+  const t = useCountdown(weddingConfig.receptionDate);
 
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
